@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Summary
-{% endblock %}
+
 {% block content %}
+    <h1>{% block title %}
+        Summary
+    {% endblock %}</h1>
 <ul>
 {% for site in object_list %}
 <li>{{ site.name }} - {{ site.a_sum }} - {{ site.b_sum }}</li>

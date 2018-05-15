@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Summary
-{% endblock %}
+
 {% block content %}
-<ul>
-{% for site in averages %}
-<li>{{ site.name }} - {{ site.a_avg|floatformat:2 }} - {{ site.b_avg|floatformat:2 }}</li>
-{% endfor %}
-</ul>
+    <h1>{% block title %}
+        Summary-average
+    {% endblock %}</h1>
+    <ul>
+        {% for site in averages %}
+            <li>{{ site.name }} - {{ site.a_avg|floatformat:2 }} - {{ site.b_avg|floatformat:2 }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

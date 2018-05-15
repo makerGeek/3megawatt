@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Sites
-{% endblock %}
+
 {% block content %}
+        <h1>{% block title %}
+        Sites
+    {% endblock %}</h1>
 <ul>
 {% for site in object_list %}
 <li>{{ site }}</li>
