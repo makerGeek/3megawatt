@@ -50,4 +50,4 @@ class SummaryAverage(View):
             except Exception as e:
                 print(e)
                 pass
-        return render(request, 'sites/summary-average.html', {'averages': averages})
+        return render(request, 'sites/summary_average.html', {'averages': averages})
