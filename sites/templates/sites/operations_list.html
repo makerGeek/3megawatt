@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Site Details - {{ site_name }}
+{% endblock %}
+{% block content %}
+<ul>
+{% for operation in object_list %}
+<li>{{ operation.date }}  - {{ operation.a_value }} - {{ operation.b_value }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
