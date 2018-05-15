@@ -5,9 +5,11 @@
         <h1>{% block title %}
         Sites
     {% endblock %}</h1>
-<ul>
+<ul class="list-group">
 {% for site in object_list %}
-<li>{{ site }}</li>
+    <li class="list-group-item">
+        <a href="{% url 'operations_list' site.id %}">{{ site }}</a>
+    </li>
 {% endfor %}
 </ul>
 {% endblock %}
