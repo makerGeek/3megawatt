@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import Sum
 
-from.models import Site, Operation
+from .models import Site, Operation
 # Create your views here.
 from django.views.generic import ListView
 
@@ -10,6 +10,7 @@ from django.views.generic import ListView
 class SitesList(ListView):
     template_name = 'sites/sites_list.html'
     model = Site
+
 
 class OperationsList(ListView):
     template_name = 'sites/operations_list.html'
@@ -25,13 +26,18 @@ class OperationsList(ListView):
         context['site_name'] = Site.objects.filter(id=site_id).first().name
         return context
 
+
 class Summary(ListView):
     template_name = 'sites/summary.html'
 
     def get_queryset(self):
-        return Site.objects.values('id','name').annotate(a_sum=Sum('operation__a_value'),b_sum=Sum('operation__b_value'))
+        # the equivalent SQL query is accessible via Site.objects.values('id', 'name').annotate(a_sum=Sum('operation__a_value'), b_sum=Sum('operation__b_value')).query
+        return Site.objects.values('id', 'name').annotate(a_sum=Sum('operation__a_value'),
+                                                          b_sum=Sum('operation__b_value'))
 
 
+# this method is bad (in terms of performance) because it loads the data in memory and loops through it to calculate
+# the sum. It is better to use QuerySets (django's orm) but this was requested in the task
 class SummaryAverage(View):
     def get(self, request, *args, **kwargs):
         sites = Site.objects.all()
@@ -41,12 +47,12 @@ class SummaryAverage(View):
             b_sum = 0
             operations = site.operation_set.all()
             for operation in operations:
-                a_sum+=operation.a_value
-                b_sum+=operation.b_value
+                a_sum += operation.a_value
+                b_sum += operation.b_value
             try:
-                a_avg = a_sum/len(operations)
-                b_avg = b_sum/len(operations)
-                averages.append({'a_avg':a_avg, 'b_avg':b_avg, 'name':site.name})
+                a_avg = a_sum / len(operations)
+                b_avg = b_sum / len(operations)
+                averages.append({'a_avg': a_avg, 'b_avg': b_avg, 'name': site.name})
             except Exception as e:
                 print(e)
                 pass
