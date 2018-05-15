@@ -5,9 +5,21 @@
     <h1>{% block title %}
         Summary
     {% endblock %}</h1>
-<ul>
-{% for site in object_list %}
-<li>{{ site.name }} - {{ site.a_sum }} - {{ site.b_sum }}</li>
-{% endfor %}
-</ul>
+    {% include 'sites/summary_buttons.html' %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <td><strong>Site</strong></td>
+                    <td><strong>A Value</strong></td><td><strong>B Value</strong></td>
+                </tr>
+            </thead>
+
+        {% for site in object_list %}
+            <tr>
+                <td>{{ site.name }}</td>
+                <td>{{ site.a_sum }}</td>
+                <td>{{ site.b_sum }}</td></tr>
+        {% endfor %}
+        </table>
 {% endblock %}
